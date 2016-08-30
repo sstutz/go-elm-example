@@ -1,0 +1,25 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Elm Test</title>
+        <!--link rel="stylesheet" href="/static/css/main.css"-->
+    </head>
+    <body>
+        <div id="app"></div>
+        <div id="scripts">
+            <script type="text/javascript" src="/static/js/elm.js"></script>
+            <script type="text/javascript">
+            var mountPoint = document.getElementById("app");
+
+            var init = {
+                version: {{.Version}},
+                build: {{.Build}}
+                };
+
+            var app = Elm.Main.embed(mountPoint, init)
+            </script>
+        </div>
+    </body>
+</html>
+
