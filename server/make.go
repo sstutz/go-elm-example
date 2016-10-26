@@ -1,17 +1,17 @@
 package main
 
 import (
-	"html/template"
 	"net/http"
 	"os"
-	"path/filepath"
+
+	"github.com/GeertJohan/go.rice"
+	"github.com/sstutz/go-elm-example/server/template"
 )
 
 var (
 	Version string
 	Build   string
 	cwd, _  = os.Getwd()
-	assets  = filepath.Join(cwd, "public")
 )
 
 type Release struct {
@@ -24,17 +24,13 @@ func main() {
 
 func serv() {
 	http.HandleFunc("/", welcome)
-
-	fs := http.FileServer(http.Dir(assets))
+	fs := http.FileServer(rice.MustFindBox("../client/dist").HTTPBox())
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.ListenAndServe(":3000", nil)
 }
 
 func welcome(w http.ResponseWriter, r *http.Request) {
-	layout := filepath.Join(cwd, "templates/elm.html")
-	t, _ := template.ParseFiles(layout)
-
+	t, _ := template.Load("elm.html")
 	release := Release{Version, Build}
-
 	t.Execute(w, release)
 }
