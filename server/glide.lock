@@ -1,5 +1,5 @@
-hash: c110f196b7a068adcfc4b00e7ac081c6775f8a9b437777f83fcbfbe03686420d
-updated: 2016-10-27T13:51:15.558530057+02:00
+hash: aefc83a672b11942240c78e586c1fcac152cd8c06714ad0fd9d3486dc4c2be82
+updated: 2016-10-27T21:12:34.243855508+02:00
 imports:
 - name: github.com/daaku/go.zipexe
   version: a5fe2436ffcb3236e175e5149162b41cd28bd27d
@@ -7,6 +7,10 @@ imports:
   version: 9fdfd46f9806a9228aae341d65ab75c5235c383c
   subpackages:
   - embedded
+- name: github.com/gorilla/context
+  version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
+- name: github.com/gorilla/mux
+  version: 0eeaf8392f5b04950925b8a69fe70f110fa7cbfc
 - name: github.com/inconshreveable/mousetrap
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
 - name: github.com/kardianos/osext

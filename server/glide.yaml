@@ -2,3 +2,5 @@ package: github.com/sstutz/go-elm-example/server
 import:
 - package: github.com/GeertJohan/go.rice
 - package: github.com/spf13/cobra
+- package: github.com/gorilla/mux
+  version: ~1.1.0
