@@ -14,7 +14,7 @@ DISTDIR=$(CWD)/dist
 RELEASE=$(BINARY).$(BUILD).tar.gz
 
 # interpolate variable values
-LDFLAGS=-ldflags "-X $(SERVER)/commands.Version=$(VERSION) -X $(SERVER)/commands.Build=$(BUILD)"
+LDFLAGS=-ldflags "-X $(SERVER)/helpers.Version=$(VERSION) -X $(SERVER)/helpers.Build=$(BUILD)"
 
 .PHONY: client server
 

@@ -4,11 +4,10 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/sstutz/go-elm-example/server/helpers"
 )
 
 var (
-	Version    string
-	Build      string
 	versionCmd = &cobra.Command{
 		Use:   "version",
 		Short: "Print version number",
@@ -22,5 +21,6 @@ func init() {
 }
 
 func version(cmd *cobra.Command, args []string) {
-	fmt.Println(Version + " " + Build)
+	release := helpers.ReleaseInformation()
+	fmt.Println(release.Version + " " + release.Build)
 }
