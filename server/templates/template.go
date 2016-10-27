@@ -1,14 +1,15 @@
-package template
+package templates
 
 import (
-	"github.com/GeertJohan/go.rice"
 	"html/template"
+
+	"github.com/sstutz/go-elm-example/server/assets"
 )
 
 func Load(name string) (t *template.Template, err error) {
 	var tmpl string
 
-	if tmpl, err = rice.MustFindBox("files").String(name); err != nil {
+	if tmpl, err = assets.LoadTemplates().String(name); err != nil {
 		return nil, err
 	}
 

@@ -1,6 +1,6 @@
 client/elm-stuff
 
-server/rice-box.go
+server/assets/rice-box.go
 server/vendor/
 
 dist/
