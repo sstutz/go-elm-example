@@ -8,15 +8,13 @@ BUILD=$(shell date -u '+%Y-%m-%d')
 # Some Paths
 CWD=$(shell pwd)
 GOAPP=$(CWD)/server
+SERVER=github.com/sstutz/go-elm-example/server
 ELMAPP=$(CWD)/client
 DISTDIR=$(CWD)/dist
 RELEASE=$(BINARY).$(BUILD).tar.gz
 
-# extend gopath to include our server
-GOPATH:=$(GOPATH):$(GOAPP)
-
 # interpolate variable values
-LDFLAGS=-ldflags "-X main.Version=$(VERSION) -X main.Build=$(BUILD)"
+LDFLAGS=-ldflags "-X $(SERVER)/commands.Version=$(VERSION) -X $(SERVER)/commands.Build=$(BUILD)"
 
 .PHONY: client server
 
@@ -29,12 +27,12 @@ deps:
 
 server:
 	cd $(GOAPP) && rice embed-go
-	GOOS=linux	GOARCH=amd64	go build $(LDFLAGS) -o $(DISTDIR)/linux/amd64/$(BINARY) github.com/sstutz/go-elm-example/server
-	GOOS=darwin	GOARCH=amd64	go build $(LDFLAGS) -o $(DISTDIR)/darwin/amd64/$(BINARY) github.com/sstutz/go-elm-example/server
+	GOOS=linux	GOARCH=amd64	go build $(LDFLAGS) -o $(DISTDIR)/linux/amd64/$(BINARY)		$(SERVER)
+	GOOS=darwin	GOARCH=amd64	go build $(LDFLAGS) -o $(DISTDIR)/darwin/amd64/$(BINARY)	$(SERVER)
 
 release:
-	tar zcvf $(DISTDIR)/linux/amd64/$(RELEASE) LICENSE README.md -C $(DISTDIR)/linux/amd64/ $(BINARY)
-	tar zcvf $(DISTDIR)/darwin/amd64/$(RELEASE) LICENSE README.md -C $(DISTDIR)/darwin/amd64/ $(BINARY)
+	tar zcvf $(DISTDIR)/linux/amd64/$(RELEASE)	LICENSE README.md -C $(DISTDIR)/linux/amd64/	$(BINARY)
+	tar zcvf $(DISTDIR)/darwin/amd64/$(RELEASE)	LICENSE README.md -C $(DISTDIR)/darwin/amd64/	$(BINARY)
 
 client:
 	cd $(ELMAPP) && mkdir -p dist/js  && elm-make src/Main.elm --output dist/js/elm.js
@@ -42,16 +40,15 @@ client:
 	cp -r client/assets/images/ client/dist/
 
 checksums:
-	cd $(DISTDIR)/linux/amd64/ && sha256sum $(RELEASE) > $(BINARY).sha256
-	cd $(DISTDIR)/darwin/amd64/ && sha256sum $(RELEASE) > $(BINARY).sha256
+	cd $(DISTDIR)/linux/amd64/	&& sha256sum $(RELEASE) > $(BINARY).sha256
+	cd $(DISTDIR)/darwin/amd64/	&& sha256sum $(RELEASE) > $(BINARY).sha256
 
 clean:
-	if [ -f $(GOAPP)/$(BINARY) ]; then rm $(GOAPP)/$(BINARY); fi
 	if [ -d $(ELMAPP)/dist ]; then rm -rf $(ELMAPP)/dist; fi
 	if [ -d $(DISTDIR) ]; then rm -rf $(DISTDIR); fi
 
 todo:
-	grep -rwn "TODO" $(GOAPP) $(ELMAPP)
+	grep --color=always -rwn "TODO" $(GOAPP) $(ELMAPP)/src
 
 fixme:
-	grep -rwn "FIXME" $(GOAPP) $(ELMAPP)
+	grep --color=always -rwn "FIXME" $(GOAPP) $(ELMAPP)/src
