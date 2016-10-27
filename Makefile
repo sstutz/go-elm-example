@@ -26,7 +26,7 @@ deps:
 	go get -u github.com/wellington/wellington/wt
 
 server:
-	cd $(GOAPP) && rice embed-go
+	cd $(GOAPP)/assets/ && rice embed-go
 	GOOS=linux	GOARCH=amd64	go build $(LDFLAGS) -o $(DISTDIR)/linux/amd64/$(BINARY)		$(SERVER)
 	GOOS=darwin	GOARCH=amd64	go build $(LDFLAGS) -o $(DISTDIR)/darwin/amd64/$(BINARY)	$(SERVER)
 
@@ -45,6 +45,7 @@ checksums:
 
 clean:
 	if [ -d $(ELMAPP)/dist ]; then rm -rf $(ELMAPP)/dist; fi
+	if [ -f $(GOAPP)/assets/rice-box.go ]; then rm -rf $(GOAPP)/assets/rice-box.go; fi
 	if [ -d $(DISTDIR) ]; then rm -rf $(DISTDIR); fi
 
 todo:
